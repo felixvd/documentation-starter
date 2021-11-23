@@ -44,7 +44,12 @@ paths:
                 - id
       operationId: GET_systeminfo
       parameters:
-      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+        - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+        - name: userId
+          in: path
+          required: 
+        :param filename: optional, can be one of controllersystem.conf, binpickingsystem.conf, teachworkersystem.conf, robotbridges.conf.json
+        :return: configuration file content dictionary 
   "/systemstats/":
     get:
       summary: Get System Stats
@@ -216,12 +221,22 @@ paths:
       summary: Get Config
       tags: 
         - Config
+      description: |-
+        Retrieve configuration file content from the controller.
       responses:
         default:
           description: ''
       operationId: GET_config
       parameters:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - name: filename
+        in: path
+        required: true
+        description: (optional) The name of the config file. Can be either controllersystem.conf, binpickingsystem.conf, teachworkersystem.conf or robotbridges.conf.json.
+        schema:
+          type: string
+          minimum: 1
+        
     put:
       summary: Put Config
       tags: 
@@ -234,6 +249,13 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+      - name: filename
+        in: path
+        required: true
+        description: (optional) The name of the config file. Can be either controllersystem.conf, binpickingsystem.conf, teachworkersystem.conf or robotbridges.conf.json.
+        schema:
+          type: string
+          minimum: 1
   "/signalmap/":
     get:
       summary: Get Signal Map
