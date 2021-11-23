@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Mujin Controller API
   version: 1.0
-  description: This documents the main API for the Mujin Controller.
+  description: "This is the main API for the Mujin Controller. \n\n ![](https://d33wubrfki0l68.cloudfront.net/a4d671d83f9e8d767d05b585e8d12ae906b7a3bd/0a691/wp-content/themes/mujin/assets/jp/img/logo.svg)"
   contact:
     name: Mujin Inc.
     email: info@mujin.co.jp
@@ -17,6 +17,7 @@ servers:
 paths:
   "/systeminfo/":
     get:
+      summary: Get System Info
       tags:
         - System
       responses:
@@ -46,6 +47,7 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/systemstats/":
     get:
+      summary: Get System Stats
       tags:
         - System
       responses:
@@ -76,6 +78,7 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/interfaces/":
     get:
+      summary: Get Interfaces
       tags:
         - System
       responses:
@@ -86,6 +89,7 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/upgrade/":
     get:
+      summary: Get Upgrade (???)
       tags:
         - System
       responses:
@@ -95,6 +99,7 @@ paths:
       parameters:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     post:
+      summary: Post Upgrade
       tags:
         - System
       responses:
@@ -106,6 +111,7 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      summary: Delete Upgrade
       tags:
         - System
       responses:
@@ -118,6 +124,9 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/reboot/":
     post:
+      summary: Post Reboot
+      tags: 
+        - System
       responses:
         '200':
           description: ''
@@ -128,6 +137,9 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/halt/":
     post:
+      summary: Post Halt
+      tags: 
+        - System
       responses:
         '200':
           description: ''
@@ -138,6 +150,9 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/restartserver/":
     post:
+      summary: Post Restart Server
+      tags: 
+        - System
       responses:
         '200':
           description: ''
@@ -148,6 +163,9 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/log/ordercycle/":
     get:
+      summary: Get Ordercycle log
+      tags: 
+        - Logs
       responses:
         default:
           description: ''
@@ -156,6 +174,9 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/log/plcsignal/":
     get:
+      summary: Get PLC Signal log
+      tags: 
+        - Logs
       responses:
         default:
           description: ''
@@ -164,6 +185,9 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/log/plcsignalanalysis/":
     get:
+      summary: Get PLC Signal Analysis log
+      tags: 
+        - Logs
       responses:
         default:
           description: ''
@@ -172,6 +196,9 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/log/user/{category}/":
     get:
+      summary: Get User Category log
+      tags: 
+        - Logs
       responses:
         default:
           description: ''
@@ -186,6 +213,9 @@ paths:
         type: string
   "/config/":
     get:
+      summary: Get Config
+      tags: 
+        - Config
       responses:
         default:
           description: ''
@@ -193,6 +223,9 @@ paths:
       parameters:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     put:
+      summary: Put Config
+      tags: 
+        - Config
       responses:
         default:
           description: ''
@@ -203,17 +236,26 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/signalmap/":
     get:
+      summary: Get Signal Map
+      tags: 
+        - Signal Map
       responses:
         default:
           description: ''
       operationId: GET_signalmap
   "/signalmap/{pk}/":
     get:
+      summary: Get Signal Map (Primary Key)
+      tags: 
+        - Signal Map
       responses:
         default:
           description: ''
       operationId: GET_signalmap-pk
     put:
+      summary: Put Signal Map (Primary Key)
+      tags: 
+        - Signal Map
       responses:
         default:
           description: ''
@@ -222,6 +264,9 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      summary: Delete Signal Map (Primary Key)
+      tags: 
+        - Signal Map
       responses:
         default:
           description: ''
@@ -237,6 +282,9 @@ paths:
         type: string
   "/backup/":
     get:
+      summary: Get Backup
+      tags: 
+        - System
       responses:
         default:
           description: ''
@@ -244,6 +292,9 @@ paths:
       parameters:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     post:
+      summary: Post Backup
+      tags: 
+        - System
       responses:
         default:
           description: ''
@@ -254,6 +305,11 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/query/barcodes/":
     get:
+      summary: Get Query Barcodes
+      tags: 
+        - Barcodes
+      description: |-
+        Query a list of scenepks based on the barcode field
       responses:
         default:
           description: ''
@@ -262,6 +318,8 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/referenceobjectpks/":
     post:
+      tags: 
+        - Unsorted (ToDo) 
       responses:
         default:
           description: ''
@@ -272,6 +330,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/file/upload/":
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -314,6 +374,8 @@ paths:
           type: string
   "/file/delete/":
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -338,6 +400,8 @@ paths:
           type: string
   "/file/list/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -365,6 +429,8 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/file/download/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '302':
           description: ''
@@ -377,6 +443,8 @@ paths:
         schema:
           type: string
     head:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '302':
           description: ''
@@ -390,6 +458,8 @@ paths:
           type: string
   "/api/v1/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -398,6 +468,8 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/api/v1/debug/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -433,6 +505,8 @@ paths:
       operationId: GET_api-v1-debug
   "/api/v1/debug/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -457,6 +531,8 @@ paths:
         type: string
   "/api/v1/profile/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -465,6 +541,8 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/api/v1/ui/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -472,6 +550,8 @@ paths:
       parameters:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
@@ -482,11 +562,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/task/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-task
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -496,11 +580,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/task/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-task-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -509,6 +597,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -524,11 +614,15 @@ paths:
         type: string
   "/api/v1/job/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-job
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -538,11 +632,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/job/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-job-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -551,6 +649,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -566,11 +666,15 @@ paths:
         type: string
   "/api/v1/planningresult/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-planningresult
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -580,11 +684,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/planningresult/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-planningresult-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -593,6 +701,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -608,11 +718,15 @@ paths:
         type: string
   "/api/v1/binpickingresult/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-binpickingresult
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -622,11 +736,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/binpickingresult/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-binpickingresult-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -635,6 +753,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -650,11 +770,15 @@ paths:
         type: string
   "/api/v1/controllerState/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-controllerState
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -664,11 +788,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/controllerState/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-controllerState-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -677,6 +805,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -692,11 +822,15 @@ paths:
         type: string
   "/api/v1/cycleLog/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-cycleLog
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -706,11 +840,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/cycleLog/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-cycleLog-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -719,6 +857,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -734,11 +874,15 @@ paths:
         type: string
   "/api/v1/itl/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-itl
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -748,11 +892,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/itl/{pk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-itl-pk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -761,6 +909,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -776,11 +926,15 @@ paths:
         type: string
   "/api/v1/scene/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -790,11 +944,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/scene/{scenepk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene-scenepk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -803,6 +961,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -818,11 +978,15 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene-scenepk-instobject
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -838,11 +1002,15 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -851,6 +1019,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -871,11 +1041,15 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/tool/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk-tool
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -896,11 +1070,15 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/tool/{toolpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk-tool-toolpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -909,6 +1087,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -934,11 +1114,15 @@ paths:
         type: string
   "/api/v1/object/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -948,11 +1132,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/object/{objectpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         default:
           description: ''
       operationId: GET_api-v1-object-objectpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         default:
           description: ''
@@ -961,6 +1149,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         default:
           description: ''
@@ -976,11 +1166,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/link/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-link
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -996,11 +1190,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/link/{linkpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-link-linkpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1009,6 +1207,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1029,11 +1229,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/attachment/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-attachment
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1049,11 +1253,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/attachment/{attachmentpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-attachment-attachmentpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1062,6 +1270,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1082,11 +1292,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/geometry/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-geometry
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1102,11 +1316,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/geometry/{geometrypk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-geometry-geometrypk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1115,6 +1333,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1135,11 +1355,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/ikparam/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-ikparam
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1155,11 +1379,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/ikparam/{ikparampk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-ikparam-ikparampk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1168,6 +1396,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1188,11 +1418,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/graspset/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-graspset
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1208,11 +1442,15 @@ paths:
         type: string
   "/api/v1/object/{objectpk}/graspset/{graspsetpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-object-objectpk-graspset-graspsetpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1221,6 +1459,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1241,11 +1481,15 @@ paths:
         type: string
   "/api/v1/robot/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1255,11 +1499,15 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/robot/{robotpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot-robotpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1268,6 +1516,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1283,11 +1533,15 @@ paths:
         type: string
   "/api/v1/robot/{robotpk}/tool/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot-robotpk-tool
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1303,11 +1557,15 @@ paths:
         type: string
   "/api/v1/robot/{robotpk}/tool/{toolpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot-robotpk-tool-toolpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1316,6 +1574,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
@@ -1336,11 +1596,15 @@ paths:
         type: string
   "/api/v1/robot/{robotpk}/attachedsensor/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot-robotpk-attachedsensor
     post:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '201':
           description: ''
@@ -1356,11 +1620,15 @@ paths:
         type: string
   "/api/v1/robot/{robotpk}/attachedsensor/{attachedsensorpk}/":
     get:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '200':
           description: ''
       operationId: GET_api-v1-robot-robotpk-attachedsensor-attachedsensorpk
     put:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '202':
           description: ''
@@ -1369,6 +1637,8 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '204':
           description: ''
