@@ -1,0 +1,1465 @@
+openapi: 3.0.0
+
+info:
+  title: Mujin Controller API
+  version: 1.0
+  description: This documents the main API for the Mujin Controller.
+  contact:
+    name: Mujin Inc.
+    email: info@mujin.co.jp
+    url: 'https://www.mujin.co.jp'
+
+servers:
+- url: http://{controller}/
+  variables:
+    controller:
+      default: controller
+paths:
+  "/systeminfo/":
+    get:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  hardware: HARDWARE-MODEL
+                  product: PRODUCT-ID
+                  id: controller
+                type: object
+                properties:
+                  hardware:
+                    type: string
+                  product:
+                    type: string
+                  id:
+                    type: string
+                required:
+                - hardware
+                - product
+                - id
+      operationId: GET_systeminfo
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/systemstats/":
+    get:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memory:
+                    type: object
+                  disk:
+                    type: object
+                  temperature:
+                    type: array
+                    items:
+                      type: object
+                  cpu:
+                    type: object
+                required:
+                - memory
+                - disk
+                - temperature
+                - cpu
+      operationId: GET_systemstats
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/interfaces/":
+    get:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+      operationId: GET_interfaces
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/upgrade/":
+    get:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+      operationId: GET_upgrade
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    post:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+      operationId: POST_upgrade
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      tags:
+        - System
+      responses:
+        '200':
+          description: ''
+      operationId: DELETE_upgrade
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/reboot/":
+    post:
+      responses:
+        '200':
+          description: ''
+      operationId: POST_reboot
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/halt/":
+    post:
+      responses:
+        '200':
+          description: ''
+      operationId: POST_halt
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/restartserver/":
+    post:
+      responses:
+        '200':
+          description: ''
+      operationId: POST_restartserver
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/log/ordercycle/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_log-ordercycle
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/log/plcsignal/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_log-plcsignal
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/log/plcsignalanalysis/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_log-plcsignalanalysis
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/log/user/{category}/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_log-user-category
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    parameters:
+    - name: category
+      in: path
+      required: true
+      schema:
+        type: string
+  "/config/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_config
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    put:
+      responses:
+        default:
+          description: ''
+      operationId: PUT_config
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/signalmap/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_signalmap
+  "/signalmap/{pk}/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_signalmap-pk
+    put:
+      responses:
+        default:
+          description: ''
+      operationId: PUT_signalmap-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        default:
+          description: ''
+      operationId: DELETE_signalmap-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/backup/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_backup
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: POST_backup
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/query/barcodes/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_query-barcodes
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/referenceobjectpks/":
+    post:
+      responses:
+        default:
+          description: ''
+      operationId: POST_referenceobjectpks
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/file/upload/":
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  filename:
+                    type: string
+                  modified:
+                    type: number
+                  size:
+                    type: integer
+                required:
+                - filename
+                - modified
+                - size
+      operationId: POST_file-upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                filename:
+                  type: string
+                file:
+                  type: string
+              required:
+              - file
+              type: object
+        required: true
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+      - name: filename
+        in: query
+        schema:
+          type: string
+  "/file/delete/":
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  filename:
+                    type: string
+                required:
+                - filename
+      operationId: POST_file-delete
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+      - name: filename
+        in: query
+        required: true
+        schema:
+          type: string
+  "/file/list/":
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  filename1.mujin.dae:
+                    modified: 1565932929.9884703
+                    size: 9938
+                type: object
+                properties:
+                  filename:
+                    type: object
+                    properties:
+                      modified:
+                        type: number
+                      size:
+                        type: integer
+                    required:
+                    - modified
+                    - size
+      operationId: GET_file-list
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/file/download/":
+    get:
+      responses:
+        '302':
+          description: ''
+      operationId: GET_file-download
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - name: filename
+        in: query
+        required: true
+        schema:
+          type: string
+    head:
+      responses:
+        '302':
+          description: ''
+      operationId: HEAD_file-download
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - name: filename
+        in: query
+        required: true
+        schema:
+          type: string
+  "/api/v1/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/api/v1/debug/":
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                example:
+                  objects:
+                  - description: System logs
+                    name: system-logs
+                    downloadUri: "/api/v1/debug/system-logs/download/"
+                    pk: system-logs
+                    resource_uri: "/api/v1/debug/system-logs/"
+                    datemodified: '2020-03-19T15:07:42.633247+09:00'
+                    size: 125289232
+                  meta:
+                    total_count: 1
+                    previous:
+                    limit: 20
+                    offset: 0
+                    next:
+                type: object
+                properties:
+                  objects:
+                    type: array
+                    items:
+                      "$ref": "#/components/schemas/DebugResource"
+                  meta:
+                    "$ref": "#/components/schemas/Meta"
+                required:
+                - objects
+                - meta
+      operationId: GET_api-v1-debug
+  "/api/v1/debug/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              example:
+                description: System logs
+                name: system-logs
+                downloadUri: "/api/v1/debug/system-logs/download/"
+                pk: system-logs
+                resource_uri: "/api/v1/debug/system-logs/"
+                datemodified: '2020-03-19T15:07:42.633247+09:00'
+                size: 125289232
+              schema:
+                "$ref": "#/components/schemas/DebugResource"
+      operationId: GET_api-v1-debug-pk
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/profile/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-profile
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+  "/api/v1/ui/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-ui
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    post:
+      responses:
+        '200':
+          description: ''
+      operationId: POST_api-v1-ui
+      parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/task/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-task
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-task
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/task/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-task-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-task-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-task-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/job/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-job
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-job
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/job/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-job-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-job-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-job-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/planningresult/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-planningresult
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-planningresult
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/planningresult/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-planningresult-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-planningresult-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-planningresult-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/binpickingresult/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-binpickingresult
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-binpickingresult
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/binpickingresult/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-binpickingresult-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-binpickingresult-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-binpickingresult-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/controllerState/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-controllerState
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-controllerState
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/controllerState/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-controllerState-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-controllerState-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-controllerState-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/cycleLog/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-cycleLog
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-cycleLog
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/cycleLog/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-cycleLog-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-cycleLog-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-cycleLog-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/itl/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-itl
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-itl
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/itl/{pk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-itl-pk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-itl-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-itl-pk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: pk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/scene/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-scene
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/scene/{scenepk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene-scenepk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-scene-scenepk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-scene-scenepk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: scenepk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/scene/{scenepk}/instobject/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene-scenepk-instobject
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-scene-scenepk-instobject
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: scenepk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-scene-scenepk-instobject-instobjectpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-scene-scenepk-instobject-instobjectpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: instobjectpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: scenepk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/tool/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk-tool
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-scene-scenepk-instobject-instobjectpk-tool
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: scenepk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: instobjectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/tool/{toolpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk-tool-toolpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-scene-scenepk-instobject-instobjectpk-tool-toolpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-scene-scenepk-instobject-instobjectpk-tool-toolpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: toolpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: scenepk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: instobjectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/object/{objectpk}/":
+    get:
+      responses:
+        default:
+          description: ''
+      operationId: GET_api-v1-object-objectpk
+    put:
+      responses:
+        default:
+          description: ''
+      operationId: PUT_api-v1-object-objectpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        default:
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/link/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-link
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object-objectpk-link
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/link/{linkpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-link-linkpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-object-objectpk-link-linkpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk-link-linkpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: linkpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/attachment/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-attachment
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object-objectpk-attachment
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/attachment/{attachmentpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-attachment-attachmentpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-object-objectpk-attachment-attachmentpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk-attachment-attachmentpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: attachmentpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/geometry/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-geometry
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object-objectpk-geometry
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/geometry/{geometrypk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-geometry-geometrypk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-object-objectpk-geometry-geometrypk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk-geometry-geometrypk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: geometrypk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/ikparam/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-ikparam
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object-objectpk-ikparam
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/ikparam/{ikparampk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-ikparam-ikparampk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-object-objectpk-ikparam-ikparampk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk-ikparam-ikparampk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: ikparampk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/graspset/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-graspset
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-object-objectpk-graspset
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/object/{objectpk}/graspset/{graspsetpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-object-objectpk-graspset-graspsetpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-object-objectpk-graspset-graspsetpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-object-objectpk-graspset-graspsetpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: graspsetpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: objectpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/robot/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-robot
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+  "/api/v1/robot/{robotpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot-robotpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-robot-robotpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-robot-robotpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: robotpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/robot/{robotpk}/tool/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot-robotpk-tool
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-robot-robotpk-tool
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: robotpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/robot/{robotpk}/tool/{toolpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot-robotpk-tool-toolpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-robot-robotpk-tool-toolpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-robot-robotpk-tool-toolpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: toolpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: robotpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/robot/{robotpk}/attachedsensor/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot-robotpk-attachedsensor
+    post:
+      responses:
+        '201':
+          description: ''
+      operationId: POST_api-v1-robot-robotpk-attachedsensor
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: robotpk
+      in: path
+      required: true
+      schema:
+        type: string
+  "/api/v1/robot/{robotpk}/attachedsensor/{attachedsensorpk}/":
+    get:
+      responses:
+        '200':
+          description: ''
+      operationId: GET_api-v1-robot-robotpk-attachedsensor-attachedsensorpk
+    put:
+      responses:
+        '202':
+          description: ''
+      operationId: PUT_api-v1-robot-robotpk-attachedsensor-attachedsensorpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    delete:
+      responses:
+        '204':
+          description: ''
+      operationId: DELETE_api-v1-robot-robotpk-attachedsensor-attachedsensorpk
+      parameters:
+      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+    parameters:
+    - name: attachedsensorpk
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: robotpk
+      in: path
+      required: true
+      schema:
+        type: string
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total_count:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        previous:
+          oneOf:
+          - type: string
+          - type: nil
+        next:
+          oneOf:
+          - type: string
+          - type: nil
+      required:
+      - total_count
+      - limit
+      - offset
+      - previous
+      - next
+    DebugResource:
+      type: object
+      properties:
+        pk:
+          type: string
+        resource_uri:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        downloadUri:
+          type: string
+        datemodified:
+          type: string
+        size:
+          type: integer
+      required:
+      - pk
+      - resource_uri
+      - description
+      - name
+      - downloadUri
+      - datemodified
+      - size
+  responses: {}
+  parameters:
+    trait_basicAuth_Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+    trait_csrfToken_X-CSRFToken:
+      name: X-CSRFToken
+      in: header
+      required: true
+      schema:
+        type: string
+    trait_csrfToken_Cookie:
+      name: Cookie
+      in: header
+      required: true
+      schema:
+        type: string
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes: {}
+  links: {}
+  callbacks: {}
