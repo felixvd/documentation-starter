@@ -249,13 +249,6 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
-      - name: filename
-        in: path
-        required: true
-        description: (optional) The name of the config file. Can be either controllersystem.conf, binpickingsystem.conf, teachworkersystem.conf or robotbridges.conf.json.
-        schema:
-          type: string
-          minimum: 1
   "/signalmap/":
     get:
       summary: Get Signal Map
