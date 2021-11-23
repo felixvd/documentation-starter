@@ -137,7 +137,7 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/halt/":
     post:
-      summary: HPost alt
+      summary: Post Halt
       tags: 
         - System
       responses:
@@ -165,7 +165,7 @@ paths:
     get:
       summary: Get Ordercycle log
       tags: 
-        - log
+        - Logs
       responses:
         default:
           description: ''
@@ -176,7 +176,7 @@ paths:
     get:
       summary: Get PLC Signal log
       tags: 
-        - log
+        - Logs
       responses:
         default:
           description: ''
@@ -187,7 +187,7 @@ paths:
     get:
       summary: Get PLC Signal Analysis log
       tags: 
-        - log
+        - Logs
       responses:
         default:
           description: ''
@@ -198,7 +198,7 @@ paths:
     get:
       summary: Get User Category log
       tags: 
-        - log
+        - Logs
       responses:
         default:
           description: ''
@@ -215,7 +215,7 @@ paths:
     get:
       summary: Get Config
       tags: 
-        - config
+        - Config
       responses:
         default:
           description: ''
@@ -225,7 +225,7 @@ paths:
     put:
       summary: Put Config
       tags: 
-        - config
+        - Config
       responses:
         default:
           description: ''
@@ -443,6 +443,8 @@ paths:
         schema:
           type: string
     head:
+      tags: 
+        - Unsorted (ToDo)
       responses:
         '302':
           description: ''
