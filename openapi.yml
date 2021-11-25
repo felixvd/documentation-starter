@@ -29,7 +29,7 @@ Where `bXVqaW46bXVqaW4=` is a base64 string, encoding the username and password 
     url: 'https://www.mujin.co.jp'
 
 servers:
-- url: http://{controller}/api/v1/
+- url: http://{controller}/
   description: The address of your Mujin controller. You need to specify the IP if DNS is not set up to resolve hostnames on the network. You can determine the IP address through the user interface on the controller.
   variables:
     controller:
