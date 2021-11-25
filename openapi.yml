@@ -1777,6 +1777,15 @@ components:
       - downloadUri
       - datemodified
       - size
+    DummyObjectJson:
+      type: object
+      example:
+        mesh: (stl data)
+      properties:
+        mesh:
+          type: string
+      required:
+      - mesh
   responses: {}
   parameters:
     trait_basicAuth_Authorization:
