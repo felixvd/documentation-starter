@@ -2,18 +2,39 @@ openapi: 3.0.0
 
 info:
   title: Mujin Controller API
-  version: 1.0
-  description: "This is the main API for the Mujin Controller. \n\n ![](https://d33wubrfki0l68.cloudfront.net/a4d671d83f9e8d767d05b585e8d12ae906b7a3bd/0a691/wp-content/themes/mujin/assets/jp/img/logo.svg)"
+  version: v1
+  description: "This is the main API for the Mujin Controller. \n\n ![](https://d33wubrfki0l68.cloudfront.net/a4d671d83f9e8d767d05b585e8d12ae906b7a3bd/0a691/wp-content/themes/mujin/assets/jp/img/logo.svg) \n\n
+
+## Introduction
+
+This API is based on the HTTP protocol and can be accessed at port `80` on the Mujin controller.
+You can try these methods in a web browser. The web browser will prompt for username and password before allowing access. 
+See the next section for details on how to authenticate when using this API.
+
+## Authentication
+
+To use this API, the client side software needs to use **Basic authentication** to authenticate with HTTP server on the controller. 
+This can be done by supplying the following HTTP header to the request:
+```
+Authorization: Basic bXVqaW46bXVqaW4=
+```
+Where `bXVqaW46bXVqaW4=` is a base64 string, encoding the username and password separated by a `:`, in this case `mujin:mujin`.
+"
   contact:
     name: Mujin Inc.
     email: info@mujin.co.jp
     url: 'https://www.mujin.co.jp'
+  license:
+    name: TBD
+    url: 'https://www.mujin.co.jp'
 
 servers:
-- url: http://{controller}/
+- url: http://{controller}/api/v1/
+  description: The address of your Mujin controller. You need to specify the IP if DNS is not set up to resolve hostnames on the network. You can determine the IP address through the user interface on the controller.
   variables:
     controller:
-      default: controller
+      default: controller123
+
 paths:
   "/systeminfo/":
     get:
@@ -45,11 +66,6 @@ paths:
       operationId: GET_systeminfo
       parameters:
         - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
-        - name: userId
-          in: path
-          required: 
-        :param filename: optional, can be one of controllersystem.conf, binpickingsystem.conf, teachworkersystem.conf, robotbridges.conf.json
-        :return: configuration file content dictionary 
   "/systemstats/":
     get:
       summary: Get System Stats
@@ -253,7 +269,7 @@ paths:
     get:
       summary: Get Signal Map
       tags: 
-        - Signal Map
+        - Config
       responses:
         default:
           description: ''
@@ -262,7 +278,7 @@ paths:
     get:
       summary: Get Signal Map (Primary Key)
       tags: 
-        - Signal Map
+        - Config
       responses:
         default:
           description: ''
@@ -270,7 +286,7 @@ paths:
     put:
       summary: Put Signal Map (Primary Key)
       tags: 
-        - Signal Map
+        - Config
       responses:
         default:
           description: ''
@@ -281,7 +297,7 @@ paths:
     delete:
       summary: Delete Signal Map (Primary Key)
       tags: 
-        - Signal Map
+        - Config
       responses:
         default:
           description: ''
@@ -333,8 +349,11 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/referenceobjectpks/":
     post:
+      summary: Post Reference Object PKs
       tags: 
-        - Unsorted (ToDo) 
+        - Objects
+      description: |-
+        Add reference object Primary Keys to the scene.
       responses:
         default:
           description: ''
@@ -345,8 +364,11 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/file/upload/":
     post:
+      summary: Post File (Upload)
       tags: 
-        - Unsorted (ToDo)
+        - Files
+      description: |-
+        Upload a file.
       responses:
         '200':
           description: ''
@@ -389,8 +411,11 @@ paths:
           type: string
   "/file/delete/":
     post:
+      summary: (Post) Delete File
       tags: 
-        - Unsorted (ToDo)
+        - Files
+      description: |-
+        Delete a file from the controller.
       responses:
         '200':
           description: ''
@@ -415,8 +440,11 @@ paths:
           type: string
   "/file/list/":
     get:
+      summary: (Get) List of Files
       tags: 
-        - Unsorted (ToDo)
+        - Files
+      description: |-
+        Get a list of files on the controller.
       responses:
         '200':
           description: ''
@@ -444,8 +472,11 @@ paths:
       - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
   "/file/download/":
     get:
+      summary: Get File
       tags: 
-        - Unsorted (ToDo)
+        - Files
+      description: |-
+        Download a file from the controller.
       responses:
         '302':
           description: ''
@@ -458,8 +489,11 @@ paths:
         schema:
           type: string
     head:
+      summary: (Head) Get File information
       tags: 
-        - Unsorted (ToDo)
+        - Files
+      description: |-
+        Get the metadata of a file.
       responses:
         '302':
           description: ''
@@ -1147,34 +1181,51 @@ paths:
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/object/{objectpk}/":
     get:
+      summary: Get Object (PK)
+      description: Gets an object from the scene by referencing its primary key. The primary key is a unique identifier (in the parent namespace).
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
-        default:
-          description: ''
+        '200':
+          description: The object description in JSON format. See [this link (TODO](mujin-data-types.md) for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DummyObjectJson'
       operationId: GET_api-v1-object-objectpk
     put:
+      summary: Put Object (PK)
+      description: Sets an object in the scene by referencing its primary key. The primary key is a unique identifier (in the parent namespace).
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
-        default:
-          description: ''
+        '201':
+          description: OK. The object was set successfully.
       operationId: PUT_api-v1-object-objectpk
+      requestBody:
+        description: The object description in JSON format. See [this link (TODO](mujin-data-types.md) for more information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DummyObjectJson'
       parameters:
-      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
-      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+        - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+        - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      summary: Delete Object (PK)
+      description: Deletes an object from the scene by referencing its primary key. The primary key is a unique identifier (in the parent namespace).
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
-        default:
-          description: ''
+        '204':
+          description: OK. The object was deleted.
       operationId: DELETE_api-v1-object-objectpk
       parameters:
-      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
-      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
+        - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
+        - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     parameters:
     - name: objectpk
+      description: The primary key of the object. 
       in: path
       required: true
       schema:
@@ -1684,13 +1735,17 @@ components:
         offset:
           type: integer
         previous:
-          oneOf:
-          - type: string
-          - type: nil
+          type: string
+          nullable: true
+          # oneOf:
+          # - type: string
+          # - type: nil
         next:
-          oneOf:
-          - type: string
-          - type: nil
+          type: string
+          nullable: true
+          # oneOf:
+          # - type: string
+          # - type: nil
       required:
       - total_count
       - limit
