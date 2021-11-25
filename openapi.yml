@@ -1187,7 +1187,7 @@ paths:
         - Objects
       responses:
         '200':
-          description: The object description in JSON format. See [this link (TODO](mujin-data-types.md) for more information.
+          description: The object description in JSON format. See [this link (TODO)](mujin-data-types.md) for more information.
           content:
             application/json:
               schema:
@@ -1203,7 +1203,7 @@ paths:
           description: OK. The object was set successfully.
       operationId: PUT_api-v1-object-objectpk
       requestBody:
-        description: The object description in JSON format. See [this link (TODO](mujin-data-types.md) for more information.
+        description: The object description in JSON format. See [this link (TODO)](mujin-data-types.md) for more information.
         content:
           application/json:
             schema:
