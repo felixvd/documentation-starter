@@ -41,17 +41,18 @@ paths:
       summary: Get System Info
       tags:
         - System
+      description: This function retrieves the system information from the controller.
       responses:
         '200':
-          description: ''
+          description: A JSON containing the System Information.
           content:
             application/json:
               schema:
+                type: object
                 example:
                   hardware: HARDWARE-MODEL
                   product: PRODUCT-ID
                   id: controller
-                type: object
                 properties:
                   hardware:
                     type: string
@@ -975,15 +976,31 @@ paths:
         type: string
   "/api/v1/scene/":
     get:
+      summary: Get scenes
+      description: Lists the scenes on the controller.
       tags: 
-        - Unsorted (ToDo)
+        - Scenes
       responses:
         '200':
-          description: ''
+          description: The requested scenes.
+          content:
+            application/json:
+              schema:
+                description: An array of the scenes, plus metadata.
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  objects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scene'
       operationId: GET_api-v1-scene
+      parameters:
+        - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     post:
       tags: 
-        - Unsorted (ToDo)
+        - Scenes
       responses:
         '201':
           description: ''
@@ -1027,20 +1044,54 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/":
     get:
+      summary: Get all instobjects
+      description: Gets an array of all instobjects in the scene.
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
         '200':
-          description: ''
+          description: A list of the instobjects in the scene.
+          content:
+            application/json:
+              schema:
+                description: An array of the instobjects in the scene, plus metadata.
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  objects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/instobject'
       operationId: GET_api-v1-scene-scenepk-instobject
+      parameters:
+        - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     post:
+      summary: Create instobject
+      description: Create a new instance of an object. If only a name is supplied, this also creates a new object that is linked to the instobject. The newly created object has no geometry. Add geometry to the object using the objectpk. (TODO; Link the path to do this)
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
         '201':
-          description: ''
+          description: The instobject data
+          content:
+            application/json:
+              schema:
+                type: object
+              # schema:
+              #   $ref: "#/components/schemas/instobject"
       operationId: POST_api-v1-scene-scenepk-instobject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new instobject's name
       parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     parameters:
@@ -1051,39 +1102,56 @@ paths:
         type: string
   "/api/v1/scene/{scenepk}/instobject/{instobjectpk}/":
     get:
+      summary: Get instobject
+      description: Get an instobject
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
         '200':
-          description: ''
+          description: The requested instobject.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/instobject"
       operationId: GET_api-v1-scene-scenepk-instobject-instobjectpk
-    put:
+      parameters:
+        - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
+    post:
+      summary: Create instobject (??)
+      description: Create a new instance of an object. If only a name is supplied, this also creates a new object that is linked to the instobject. The newly created object has no geometry. Add geometry to the object using the objectpk. (TODO; Link the path to do this)
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
-        '202':
-          description: ''
-      operationId: PUT_api-v1-scene-scenepk-instobject-instobjectpk
+        '201':
+          description: The newly created instobject.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/instobject"
+      operationId: POST_api-v1-scene-scenepk-instobject-instobjectpk
       parameters:
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     delete:
+      summary: Delete instobject
+      description: Delete an object instance.
       tags: 
-        - Unsorted (ToDo)
+        - Objects
       responses:
         '204':
-          description: ''
+          description: OK. The instobject was deleted.
       operationId: DELETE_api-v1-scene-scenepk-instobject-instobjectpk
       parameters:
+      - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
       - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
       - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
     parameters:
-    - name: instobjectpk
+    - name: scenepk
       in: path
       required: true
       schema:
         type: string
-    - name: scenepk
+    - name: instobjectpk
       in: path
       required: true
       schema:
@@ -1161,24 +1229,6 @@ paths:
       required: true
       schema:
         type: string
-  "/api/v1/object/":
-    get:
-      tags: 
-        - Unsorted (ToDo)
-      responses:
-        '200':
-          description: ''
-      operationId: GET_api-v1-object
-    post:
-      tags: 
-        - Unsorted (ToDo)
-      responses:
-        '201':
-          description: ''
-      operationId: POST_api-v1-object
-      parameters:
-      - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
-      - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
   "/api/v1/object/{objectpk}/":
     get:
       summary: Get Object (PK)
@@ -1191,8 +1241,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DummyObjectJson'
+                $ref: '#/components/schemas/OpenraveObject'
       operationId: GET_api-v1-object-objectpk
+      parameters:
+        - "$ref": "#/components/parameters/trait_basicAuth_Authorization"
     put:
       summary: Put Object (PK)
       description: Sets an object in the scene by referencing its primary key. The primary key is a unique identifier (in the parent namespace).
@@ -1207,7 +1259,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DummyObjectJson'
+              $ref: '#/components/schemas/OpenraveObject'
       parameters:
         - "$ref": "#/components/parameters/trait_csrfToken_X-CSRFToken"
         - "$ref": "#/components/parameters/trait_csrfToken_Cookie"
@@ -1723,8 +1775,23 @@ paths:
       required: true
       schema:
         type: string
+
 components:
   schemas:
+    translate:
+      description: The translation in xyz format.
+      type: array
+      minLength: 3
+      maxLength: 3
+      items:
+        type: number
+    quaternion:
+      description: The rotation as a quaternion in wxyz format.
+      type: array
+      minLength: 4
+      maxLength: 4
+      items:
+        type: number
     Meta:
       type: object
       properties:
@@ -1737,21 +1804,9 @@ components:
         previous:
           type: string
           nullable: true
-          # oneOf:
-          # - type: string
-          # - type: nil
         next:
           type: string
           nullable: true
-          # oneOf:
-          # - type: string
-          # - type: nil
-      required:
-      - total_count
-      - limit
-      - offset
-      - previous
-      - next
     DebugResource:
       type: object
       properties:
@@ -1777,7 +1832,7 @@ components:
       - downloadUri
       - datemodified
       - size
-    DummyObjectJson:
+    OpenraveObject:
       type: object
       example:
         mesh: (stl data)
@@ -1786,6 +1841,212 @@ components:
           type: string
       required:
       - mesh
+    instobject:
+      type: object
+      description: An object instance in a scene.
+      example:
+        links: {...}
+        name: sourceconveyor_left
+        object_pk: itodenki_sg6-ft-s-c6.mujin.msgpack%40body9_motion
+        pk: body9_motion
+        quaternion: [1,0,0,0]
+        translate: [0,0,0]
+        unit: mm
+        reference_uri: mujin:/itodenki_sg6-ft-s-c6.mujin.msgpack@body9_motion
+      properties:
+        name:
+          type: string
+          description: The name of the object instance. This is *not* the identifier and is not unique. Multiple objects can have the same name.
+        links:
+          type: array
+          description: A list of OpenRAVE links
+          items:
+            # type: object
+            # description: OpenRAVE links
+            $ref: "#/components/schemas/Link"
+        object_pk:
+          type: string
+        pk:
+          type: string
+        quaternion:
+          $ref: '#/components/schemas/quaternion'
+        translate:
+          $ref: '#/components/schemas/translate'
+        reference_uri:
+          type: string
+        unit:
+          type: string
+          example: mm
+        attachedsensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedSensor'
+        dofvalues:
+          type: array
+          description: The joint values of this robot/gripper/object. 
+          items:
+            type: number
+        insttools:
+          type: array
+          description: The tool instances of a robot.
+          items:
+            $ref: '#/components/schemas/insttool'
+        connectedBodies:
+          type: array
+          description: A list of (the names of) connected bodies.
+          items:
+            type: object
+            properties:
+              name:
+                description: The name of the connected body.
+                type: string
+    Scene:
+      type: object
+      description: An OpenRAVE scene. This data structure contains objects, sensors, robots, manipulators, joint states and more. It describes our robot and its physical environment.
+      example:
+        aabb_half_extents: [0, 0, 0]
+        barcodeScanningGain: 1
+        barcodes: []
+        contentdatemodified: "2021-11-26T14:24:11.193685+09:00"
+        datemodified: "2021-11-26T14:24:11.193685+09:00"
+        disabledReferenceObjectPks: []
+        gripperperformances: []
+        keywords: scene
+        mass: 0
+        materialType: 
+        name: itodenki_sg6-ft-s-c6
+        note: 
+        objectPackingId: 254
+        objectType: 
+        pk: itodenki_sg6-ft-s-c6.mujin.msgpack
+        referenceobjectpks: []
+        scenetype: mujinmsgpack
+        transferSpeedMult: 1
+        upaxis: Z_UP
+        uri: mujin:/itodenki_sg6-ft-s-c6.mujin.msgpack
+      properties:
+        aabb_half_extents: 
+          type: array
+          items:
+            type: number
+          minLength: 3
+          maxLength: 3
+        barcodeScanningGain:
+          type: number
+        barcodes:
+          type: array
+          items:
+            type: number
+        contentdatemodified:
+          type: string
+          description: A date string.
+          example: "2021-11-26T14:24:11.193685+09:00"
+        datemodified: 
+          type: string
+          description: A date string.
+          example: "2021-11-26T14:24:11.193685+09:00"
+        disabledReferenceObjectPks:
+          type: array
+          items:
+            type: string
+        gripperperformances:
+          type: array
+          items:
+            type: string
+          description: "???"
+        keywords: 
+          type: string
+          example: scene
+        mass:
+          type: number
+        materialType: 
+          type: string
+        name: 
+          type: string
+        note: 
+          type: string
+        objectPackingId:
+          type: integer
+        objectType: 
+          type: string
+        pk: 
+          type: string
+        referenceobjectpks:
+          type: array
+          items:
+            type: string
+        scenetype:
+          type: string
+          example: mujinmsgpack
+        transferSpeedMult:
+          type: number
+        upaxis: 
+          type: string
+          example: Z_UP
+        uri: 
+          type: string
+          example: mujin:/itodenki_sg6-ft-s-c6.mujin.msgpack
+    Link:
+      type: object
+      description: An OpenRAVE scene. This data structure contains objects, sensors, robots, manipulators, joint states and more. It describes our robot and its physical environment.
+      example:
+        collision: true
+        linkpk: link0
+        name: base
+        quaternion: [1, 0, 0, 0 ]
+        translate: [1159, 1340, 500 ]
+        visible: true
+      properties:
+        collision:
+          type: boolean
+        visible:
+          type: boolean
+        linkpk:
+          type: string
+        name:
+          type: string
+        quaternion:
+          $ref: '#/components/schemas/quaternion'
+        translate:
+          $ref: '#/components/schemas/translate'
+    AttachedSensor:
+      type: object
+      description: The position of a sensor in an OpenRAVE scene. This data structure contains the sensor name and its translation and quaternion.
+      example:
+        name: ensenso_l_raw
+        quaternion: [-0.05, 0.7, 0.71, -0.018]
+        translate: [1159, 1340, 500]
+      properties:
+        name:
+          type: string
+          description: The name of the sensor.
+        quaternion:
+          $ref: '#/components/schemas/quaternion'
+        translate:
+          $ref: '#/components/schemas/translate'
+    insttool:
+      type: object
+      description: An instance of a tool.
+      example:
+        quaternion: [0.0012217, 0.000003625, 0.9999, -0.002967]
+        translate: [344, 0.5, 754]
+        direction: [0, 0, 1]
+        name: suction0
+      properties:
+        name:
+          type: string
+          description: The name of the sensor.
+        quaternion:
+          $ref: '#/components/schemas/quaternion'
+        translate:
+          $ref: '#/components/schemas/translate'
+        direction:
+          description: The "direction" of a tool, defined as a vector in the coordinate system. For example, this would point away from the center of a suction cup.
+          type: array
+          minLength: 3
+          maxLength: 3
+          items:
+            type: number
   responses: {}
   parameters:
     trait_basicAuth_Authorization:
@@ -1806,6 +2067,30 @@ components:
       required: true
       schema:
         type: string
+    scenepk:
+      name: scenepk
+      in: path
+      schema:
+        type: string
+      example: myscene.mujin.msgpack
+      required: true
+      description: The scene's primary key.
+    instobjectpk:
+      name: instobjectpk
+      in: path
+      schema:
+        type: string
+      example: body1
+      required: true
+      description: The primary key of the instobject, without the name of the scene it is a child of. An object_pk may be of the format '{scenename}%40{instobjectok}''. This instobjectpk is the latter part of that object_pk. It is a unique identifier inside the scene.
+    objectpk:
+      name: objectpk
+      in: path
+      schema:
+        type: string
+      example: scenename%40body1
+      required: true
+      description: The object's primary key. Includes the name of the scene it is a child of. The object_pk may be of the format '{scenename}%40{instobjectok}.' It is unique to this object.
   examples: {}
   requestBodies: {}
   headers: {}
